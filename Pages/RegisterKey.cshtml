@@ -1,0 +1,46 @@
+@page
+@model RegisterKeyModel
+
+<h2>Register</h2>
+
+<form method="post">
+    <div class="form-group">
+        <label for="Username">Username</label>
+        <input type="text" id="Username" class="form-control" name="Username" asp-for="Input.Username" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Key">Key</label>
+        <input type="text" id="Key" class="form-control" name="Key" asp-for="Input.Key" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Register</button>
+
+    <p>@Model.Message</p>
+</form>
+
+<hr>
+
+<h2>Login</h2>
+
+<form method="post" asp-page-handler="Login">
+    <div>
+        <label for="LoginUsername">Username</label>
+        <input type="text" id="LoginUsername" class="form-control" name="Input.Username" required />
+    </div>
+
+    <div>
+        <label for="LoginKey">Key</label>
+        <input type="text" id="LoginKey" class="form-control" name="Input.Key" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Login</button>
+
+    <p>@Model.LoginMessage</p>
+</form>
+
+@if (!string.IsNullOrEmpty(Model.DecryptedKey))
+{
+    <h3>Your Retrieved Key:</h3>
+    <p><strong>@Model.DecryptedKey</strong></p>
+}

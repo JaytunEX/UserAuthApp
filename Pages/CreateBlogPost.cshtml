@@ -1,0 +1,168 @@
+@page
+@model CreateBlogPostModel
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Blog Post</title>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Contenedor principal */
+        .container {
+            width: 80%;
+            margin: 30px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Estilo del formulario */
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        form label {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        form input, form textarea {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        form button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        form button:hover {
+            background-color: #45a049;
+        }
+
+        /* Estilo para los mensajes */
+        .message {
+            padding: 10px;
+            margin-top: 20px;
+            background-color: #e3f7e3;
+            color: #3a7f3a;
+            border-radius: 5px;
+            border: 1px solid #c3f7c3;
+        }
+
+        .error {
+            background-color: #f9e1e1;
+            color: #d9534f;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Lista de posts */
+        h2 {
+            font-size: 22px;
+            margin-top: 40px;
+            color: #333;
+        }
+
+        .post-list {
+            margin-top: 20px;
+        }
+
+        .post-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .post-list li {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .post-list h3 {
+            margin: 0;
+            font-size: 20px;
+            color: #333;
+        }
+
+        .post-list p {
+            font-size: 16px;
+            color: #555;
+        }
+
+        .post-list .integrity {
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    Create a Blog Post
+</header>
+
+<div class="container">
+    <h2>Create a Blog Post</h2>
+
+    <form method="post">
+        <label for="Title">Title</label>
+        <input type="text" id="Title" name="Title" asp-for="Input.Title" required />
+
+        <label for="Description">Description</label>
+        <textarea id="Description" name="Description" asp-for="Input.Description" required></textarea>
+
+        <button type="submit">Create Post</button>
+    </form>
+
+    @if (!string.IsNullOrEmpty(Model.Message))
+    {
+        <div class="message">@Model.Message</div>
+    }
+
+    @if (Model.BlogPosts.Any())
+    {
+        <h2>Existing Blog Posts</h2>
+        <div class="post-list">
+            <ul>
+                @foreach (var post in Model.BlogPosts)
+                {
+                    <li>
+                        <h3>@post.Title</h3>
+                        <p>@post.Description</p>
+                        <p class="integrity">Integrity: @Model.ValidateBlogIntegrity(post)</p>
+                    </li>
+                }
+            </ul>
+        </div>
+    }
+    else
+    {
+        <p>No blog posts yet.</p>
+    }
+</div>
+
+</body>
+</html>
